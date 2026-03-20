@@ -1,39 +1,24 @@
 class OhioMedicaidBilling:
     def __init__(self):
-        # 2026 Ohio Medicaid National Averages (Approximated)
+        # 2026 Finalized Rates (Rule 5160-1-18)
         self.rates = {
-            "99453": 21.71,  # Initial Setup
-            "99445": 47.00,  # 2-15 days monitoring (New 2026 Code)
-            "99454": 47.00,  # 16-30 days monitoring
-            "99470": 26.00   # First 10 mins of management (New 2026 Code)
+            "99453": 21.71, "99445": 52.11, "99454": 52.11,
+            "99470": 26.05, "99457": 51.77, "99458": 41.42,
+            "99490": 66.13, "H0038": 15.51 # Per 15-min unit
         }
 
-    def determine_billing(self, monitoring_days, management_minutes=0):
-        billable_items = []
-        
-        # Device Supply & Data Transmission
-        if 2 <= monitoring_days <= 15:
-            billable_items.append({"code": "99445", "desc": "Device Supply (Short-term)", "amt": self.rates["99445"]})
-        elif monitoring_days >= 16:
-            billable_items.append({"code": "99454", "desc": "Device Supply (Full-month)", "amt": self.rates["99454"]})
-            
-        # Clinical Management Time
-        if 10 <= management_minutes < 20:
-            billable_items.append({"code": "99470", "desc": "Clinical Mgmt (10-19 min)", "amt": self.rates["99470"]})
-        elif management_minutes >= 20:
-            # Note: 99457 is used for 20+ minutes
-            billable_items.append({"code": "99457", "desc": "Clinical Mgmt (20+ min)", "amt": 52.00})
-            
-        return billable_items
-
-if __name__ == "__main__":
-    billing = OhioMedicaidBilling()
-    # Using your 30-day simulation data
-    results = billing.determine_billing(monitoring_days=30, management_minutes=15)
-    
-    print("--- Ohio Medicaid 2026 Billing Preview ---")
-    total = 0
-    for item in results:
-        print(f"Code: {item['code']} | {item['desc']:<25} | ${item['amt']:.2f}")
-        total += item['amt']
-    print(f"Total Potential Reimbursement: ${total:.2f}")
+    def determine_billing(self, days, review_mins, peer_hrs):
+        billable = []
+        # Monitoring Supply
+        if 2 <= days <= 15: billable.append({"code":"99445", "amt":self.rates["99445"]})
+        elif days >= 16: billable.append({"code":"99454", "amt":self.rates["99454"]})
+        # Clinical Management
+        if 10 <= review_mins < 20: billable.append({"code":"99470", "amt":self.rates["99470"]})
+        elif review_mins >= 20:
+            billable.append({"code":"99457", "amt":self.rates["99457"]})
+            if review_mins >= 40: billable.append({"code":"99458", "amt":self.rates["99458"]})
+        # Care Coordination & Peer Support
+        billable.append({"code":"99490", "amt":self.rates["99490"]})
+        peer_units = int(peer_hrs * 4)
+        if peer_units > 0: billable.append({"code":"H0038", "units":peer_units, "amt":self.rates["H0038"] * peer_units})
+        return billable
