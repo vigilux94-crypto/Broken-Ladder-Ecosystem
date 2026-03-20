@@ -1,0 +1,34 @@
+Day   | Status     | Coins     
+------------------------------
+1     | GREEN      | 360       
+2     | GREEN      | 360       
+3     | YELLOW     | 230       
+4     | GREEN      | 360       
+5     | YELLOW     | 230       
+6     | YELLOW     | 230       
+7     | GREEN      | 360       
+8     | GREEN      | 360       
+9     | GREEN      | 360       
+10    | YELLOW     | 230       
+11    | GREEN      | 360       
+12    | GREEN      | 360       
+13    | GREEN      | 360       
+14    | GREEN      | 360       
+15    | GREEN      | 360       
+16    | GREEN      | 360       
+17    | GREEN      | 360       
+18    | YELLOW     | 230       
+19    | GREEN      | 360       
+20    | YELLOW     | 230       
+21    | GREEN      | 360       
+22    | GREEN      | 360       
+23    | GREEN      | 360       
+24    | GREEN      | 360       
+25    | GREEN      | 360       
+26    | GREEN      | 360       
+27    | GREEN      | 360       
+28    | GREEN      | 360       
+29    | GREEN      | 360       
+30    | YELLOW     | 230       
+------------------------------
+30-Day Total: 9890 SOBER Coins
